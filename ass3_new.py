@@ -26,29 +26,23 @@ for bits in key_sizes:
     key_time = time.perf_counter() - start
 
     print(f"\nKey size: {bits} bits")
-    print(f"Key generation: {key_time:.6f} seconds")
+    print(f"Key generation time: {key_time:.6f} seconds")
 
     for size in message_sizes:
         message = (1 << size) - 1
-        if message >= n:
-            continue
 
         start = time.perf_counter()
-        for _ in range(runs):
-            cipher = pow(message, e, n)
-        encrypt_time = (time.perf_counter() - start) / runs
+        cipher = pow(message, e, n)
+        encrypt_time = time.perf_counter() - start
 
         start = time.perf_counter()
-        for _ in range(runs):
-            plain = pow(cipher, d, n)
-        decrypt_time = (time.perf_counter() - start) / runs
+        plain = pow(cipher, d, n)
+        decrypt_time = time.perf_counter() - start
 
-        print(
-            f"\nMessage size: {size} bits"
-            f"\nOriginal message: {message}"
-            f"\nEncrypted message: {cipher}"
-            f"\nDecrypted message: {plain}"
-            f"\nCorrect: {plain == message}"
-            f"\nEncryption time: {encrypt_time:.8f} seconds"
-            f"\nDecryption time: {decrypt_time:.8f} seconds"
-        )
+        print(f"\nMessage size: {size} bits")
+        print(f"Original message: {message}")
+        print(f"Encrypted message: {cipher}")
+        print(f"Decrypted message: {plain}")
+        print(f"Correct: {plain == message}")
+        print(f"Encryption time: {encrypt_time:.8f} seconds")
+        print(f"Decryption time: {decrypt_time:.8f} seconds")
